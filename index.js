@@ -31,15 +31,17 @@ app.get("/api", function(req, res){
 })
 
 app.get("/api/:date", function(req, res){
+  const date = new Date(req.params.date);
   let unix;
+
   if (!req.params.date){
     unix = Date.now();
-  } else if (isNaN(new Date(req.params.date).getTime)){
+  } else if (isNaN(date.getTime())){
     res.json({"error": "Invalid Date"})
     return;
   } else {
     if (req.params.date.includes("-")){
-      unix = new Date(req.params.date).getTime();
+      unix = date.getTime();
     } else {
       unix = parseInt(req.params.date);
     }

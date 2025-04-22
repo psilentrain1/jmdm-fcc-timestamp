@@ -36,14 +36,15 @@ app.get("/api/:date", function (req, res) {
   if (!req.params.date) {
     unix = Date.now();
   } else {
-    if (req.params.date.includes("-")) {
+    if (isNaN(req.params.date)) {
       unix = date.getTime();
     } else {
       unix = parseInt(req.params.date);
     }
+
   }
   const utc = new Date(unix).toUTCString();
-  if (utc === "Invalid Date" || isNaN(unix)){
+  if (utc === "Invalid Date" || isNaN(unix)) {
     res.json({ error: "Invalid Date" });
   } else {
     res.json({ unix: unix, utc: utc });
